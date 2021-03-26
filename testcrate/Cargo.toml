@@ -1,0 +1,8 @@
+[package]
+name = "testcrate"
+version = "0.1.0"
+authors = ["neil <sheredom@gmail.com>"]
+edition = "2018"
+
+[build-dependencies]
+envcache = { path = "../envcache" }
