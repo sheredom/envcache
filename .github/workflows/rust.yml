@@ -2,9 +2,9 @@ name: Rust
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   lint:
@@ -37,18 +37,22 @@ jobs:
           command: clippy
           args: --lib --tests -- -D warnings
 
-      # make sure cargo deny does not result in any errors
-      - run: cargo install cargo-deny --locked
-      - name: cargo deny
-        uses: actions-rs/cargo@v1
-        with:
-          command: deny
-          args: check
-
-  test:
+  test-all:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Test
+      run: cargo run
+      env:
+        TEST: 42
+
+  test-non-windows:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
