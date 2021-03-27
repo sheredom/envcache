@@ -99,9 +99,17 @@ impl EnvCache {
     }
 
     /// Cache a variable `env` into the envcache.
-    pub fn cache(&mut self, env: &str) {
+    ///
+    /// Returns the value of the environment variable.
+    pub fn cache<'a>(&'a mut self, env: &str) -> Option<&'a str> {
         if let Ok(var) = env::var(env) {
             self.entries.insert(env.to_string(), var);
+        }
+
+        if let Some(var) = self.entries.get(&env.to_string()) {
+            Some(var)
+        } else {
+            None
         }
     }
 }
