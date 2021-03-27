@@ -79,13 +79,13 @@ impl EnvCache {
             let mut index = 0;
 
             while index < string.len() {
-                let env_len = string[index..index + 8].parse::<u32>().unwrap() as usize;
+                let env_len = usize::from_str_radix(&string[index..index + 8], 16).unwrap();
                 index += 8;
 
                 let env = &string[index..index + env_len];
                 index += env_len;
 
-                let val_len = string[index..index + 8].parse::<u32>().unwrap() as usize;
+                let val_len = usize::from_str_radix(&string[index..index + 8], 16).unwrap();
                 index += 8;
 
                 let val = &string[index..index + val_len];
