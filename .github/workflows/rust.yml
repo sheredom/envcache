@@ -47,7 +47,8 @@ jobs:
     - name: Test
       run: cargo run
       env:
-        TEST: 42
+        TEST_A: 42
+        TEST_B: 0
 
   test-non-windows:
     strategy:
@@ -58,7 +59,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Test
       run: |
-        TEST=42 cargo run
+        TEST_A=42 TEST_B=0 cargo run
         cargo run
 
   publish-check:
